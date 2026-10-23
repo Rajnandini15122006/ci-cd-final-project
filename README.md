@@ -1,38 +1,40 @@
-# CI/CD Tools and Practices Final Project Template
+# CI/CD Tools and Practices Final Project
 
-This repository contains the template to be used for the Final Project for the Coursera course **CI/CD Tools and Practices**.
+This repository contains the completed CI/CD pipeline implementation for the Coursera course **CI/CD Tools and Practices** (IBM DevOps and Software Engineering Professional Certificate).
 
-## Usage
+## Project Overview
 
-This repository is to be used as a template to create your own repository in your own GitHub account. No need to Fork it as it has been set up as a Template. This will avoid confusion when making Pull Requests in the future.
+In this project, a complete CI/CD pipeline is implemented using GitHub Actions for Continuous Integration and Tekton / Red Hat OpenShift Pipelines for Continuous Delivery. The application is a Flask-based REST microservice with unit testing, linting, containerization, and automated deployment.
 
-From the GitHub **Code** page, press the green **Use this template** button to create your own repository from this template.
+## Features & Implementation
+- **Continuous Integration (GitHub Actions)**: Automated workflow executing flake8 linting and unit tests via `nosetests` on every push and pull request.
+- **Tekton Tasks (`.tekton/tasks.yml`)**: Cloud-native pipeline tasks including workspace cleanup (`cleanup`), linting (`flake8`), and test execution (`nose`).
+- **OpenShift Pipelines (`.tekton/pipeline.yaml`)**: End-to-end delivery pipeline orchestrating cleanup, git cloning, linting, unit testing, container image building with Buildah, and Kubernetes deployment.
+- **Monitoring & Verification**: Persistent storage via PersistentVolumeClaims (PVC) and deployment logging on OpenShift.
 
-Name your repo: `ci-cd-final-project`.
+## Setup & Local Testing
 
-## Setup
-
-After entering the lab environment you will need to run the `setup.sh` script in the `./bin` folder to install the prerequisite software.
-
+Install dependencies:
 ```bash
 bash bin/setup.sh
 ```
 
-Then you must exit the shell and start a new one for the Python virtual environment to be activated.
-
+Run linter:
 ```bash
-exit
+flake8 service tests --count --max-complexity=10 --max-line-length=127 --statistics
 ```
 
-## Tasks
+Run unit tests:
+```bash
+nosetests -v --with-spec --spec-color
+```
 
-
-## License
-
-Licensed under the Apache License. See [LICENSE](/LICENSE)
+## Repository Structure
+- `.github/workflows/workflow.yml` - GitHub Actions CI workflow
+- `.tekton/tasks.yml` - Tekton Task definitions (`cleanup` and `nose`)
+- `.tekton/pipeline.yaml` - OpenShift Tekton CI/CD Pipeline
+- `service/` - Flask REST service source code
+- `tests/` - Nose test suites
 
 ## Author
-
-Skills Network
-
-## <h3 align="center"> © IBM Corporation 2023. All rights reserved. <h3/>
+Rajnandini (rajnandini15122006@gmail.com)
